@@ -10,9 +10,9 @@
  * @param a
  * @param texto
  */
-Ejemplo::Ejemplo(int a, const char *texto) {
+Ejemplo::Ejemplo(int a, const std::string texto) {
     //pasar el contenido de texto (parametro) a texto (array de la clase)
-    strcpy(this->texto, texto);
+    this->texto = texto;
     this->a = a;
 }
 
@@ -26,6 +26,10 @@ void Ejemplo::setA(int a) {
     Ejemplo::a = a;
 }
 
-const char *Ejemplo::getTexto() const {
+const std::string &Ejemplo::getTexto() const {
     return texto;
+}
+
+void Ejemplo::setTexto(const std::string &texto) {
+    Ejemplo::texto = texto;
 }

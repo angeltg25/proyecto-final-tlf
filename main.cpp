@@ -1,7 +1,8 @@
 #include <iostream>
+#include "headers/Ejemplo.h"
 
 int main() {
-    //Imprime algo
-    std::cout << "Hello, World!" << std::endl;
+    Ejemplo ejemplo(1, "Hola");
+    std::cout << ejemplo.getTexto() <<std::endl;
     return 0;
 }

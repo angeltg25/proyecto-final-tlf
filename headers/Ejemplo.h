@@ -5,6 +5,8 @@
 #ifndef PROYECTO_FINAL_TLF_EJEMPLO_H
 #define PROYECTO_FINAL_TLF_EJEMPLO_H
 
+#include <string>
+
 /**
  * Definicion de la clase, atributos y funciones, es como una interface en java
  */
@@ -12,7 +14,7 @@ class Ejemplo {
 private:
     //Atributos private
     int a;
-    char texto[100];
+    std::string texto;
 public:
     //Atributos o funciones public
 
@@ -21,7 +23,7 @@ public:
      * @param a
      * @param texto
      */
-    Ejemplo(int a, const char* texto);
+    Ejemplo(int a, const std::string texto);
 
 
     //----GETTERS & SETTERS
@@ -30,7 +32,9 @@ public:
 
     void setA(int a);
 
-    const char *getTexto() const;
+    const std::string &getTexto() const;
+
+    void setTexto(const std::string &texto);
 };
 
 
