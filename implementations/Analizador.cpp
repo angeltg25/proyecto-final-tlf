@@ -26,11 +26,11 @@ void Analizador::analizar(std::string ruta) {
         std::string linea; //Linea actual
         while (std::getline(archivo, linea)) {
             std::istringstream iss(linea);
-            std::string primerElemento;
+            std::string lexema;
 
             // Leer el primer elemento de la línea (separado por espacio)
-            iss >> primerElemento;
-            std::cout << primerElemento << std::endl; // Imprime cada línea del archivo
+            iss >> lexema;
+            std::cout << lexema << std::endl; // Imprime cada línea del archivo
         }
         archivo.close(); // Cierra el archivo después de leerlo
     } else {
