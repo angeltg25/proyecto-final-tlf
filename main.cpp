@@ -4,7 +4,7 @@
 #include "headers/Analizador.h"
 
 int main() {
-    std::string rutaArchivo = "C:\\td\\datosPrueba\\codigoFuente.txt";
+    std::string rutaArchivo = "../codigo-fuente-prueba/codigoFuente.txt";
     Analizador analizador;
     analizador.analizar(rutaArchivo);
 
