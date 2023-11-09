@@ -5,4 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(proyecto_final_tlf main.cpp
         implementations/Ejemplo.cpp
-        headers/Ejemplo.h)
+        headers/Ejemplo.h
+        implementations/Token.cpp
+        headers/Token.h
+        implementations/Analizador.cpp
+        headers/Analizador.h)

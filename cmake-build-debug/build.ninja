@@ -61,6 +61,18 @@ build CMakeFiles/proyecto_final_tlf.dir/implementations/Ejemplo.cpp.obj: CXX_COM
   OBJECT_DIR = CMakeFiles\proyecto_final_tlf.dir
   OBJECT_FILE_DIR = CMakeFiles\proyecto_final_tlf.dir\implementations
 
+build CMakeFiles/proyecto_final_tlf.dir/implementations/Token.cpp.obj: CXX_COMPILER__proyecto_final_tlf_unscanned_Debug C$:/td/ws_class_clion/proyecto-final-tlf/implementations/Token.cpp || cmake_object_order_depends_target_proyecto_final_tlf
+  DEP_FILE = CMakeFiles\proyecto_final_tlf.dir\implementations\Token.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\proyecto_final_tlf.dir
+  OBJECT_FILE_DIR = CMakeFiles\proyecto_final_tlf.dir\implementations
+
+build CMakeFiles/proyecto_final_tlf.dir/headers/Analizador.cpp.obj: CXX_COMPILER__proyecto_final_tlf_unscanned_Debug C$:/td/ws_class_clion/proyecto-final-tlf/headers/Analizador.cpp || cmake_object_order_depends_target_proyecto_final_tlf
+  DEP_FILE = CMakeFiles\proyecto_final_tlf.dir\headers\Analizador.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\proyecto_final_tlf.dir
+  OBJECT_FILE_DIR = CMakeFiles\proyecto_final_tlf.dir\headers
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target proyecto_final_tlf
@@ -69,7 +81,7 @@ build CMakeFiles/proyecto_final_tlf.dir/implementations/Ejemplo.cpp.obj: CXX_COM
 #############################################
 # Link the executable proyecto_final_tlf.exe
 
-build proyecto_final_tlf.exe: CXX_EXECUTABLE_LINKER__proyecto_final_tlf_Debug CMakeFiles/proyecto_final_tlf.dir/main.cpp.obj CMakeFiles/proyecto_final_tlf.dir/implementations/Ejemplo.cpp.obj
+build proyecto_final_tlf.exe: CXX_EXECUTABLE_LINKER__proyecto_final_tlf_Debug CMakeFiles/proyecto_final_tlf.dir/main.cpp.obj CMakeFiles/proyecto_final_tlf.dir/implementations/Ejemplo.cpp.obj CMakeFiles/proyecto_final_tlf.dir/implementations/Token.cpp.obj CMakeFiles/proyecto_final_tlf.dir/headers/Analizador.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\proyecto_final_tlf.dir
