@@ -31,6 +31,10 @@ void Analizador::analizar(std::string ruta) {
             // Leer el primer elemento de la línea (separado por espacio)
             iss >> lexema;
             std::cout << lexema << std::endl; // Imprime cada línea del archivo
+
+
+
+            //hola
         }
         archivo.close(); // Cierra el archivo después de leerlo
     } else {
