@@ -7,6 +7,8 @@
 Token::Token() {
 }
 
-int Token::verificarElemento() {
-    return 0;
+void Token::verificarElemento() {
+
 }
+
+

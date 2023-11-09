@@ -16,7 +16,7 @@ private:
 
 public:
     Token();
-    verificarElemento();
+    void verificarElemento();
 };
 
 

@@ -5,5 +5,5 @@
 #include "../headers/Analizador.h"
 
 Analizador::Analizador() {
-
+    palabrasReservadas.push_back(Token());
 }
