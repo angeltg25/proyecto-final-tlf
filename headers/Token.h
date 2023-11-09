@@ -11,12 +11,14 @@
 
 class Token {
 private:
-    std::string tipo;
-    std::vector<std::string> listaElementos;
+    std::string elemento;
 
 public:
-    Token();
-    void verificarElemento();
+    Token(std::string elemento);
+
+    const std::string &getElemento() const;
+
+    void setElemento(const std::string &elemento);
 };
 
 

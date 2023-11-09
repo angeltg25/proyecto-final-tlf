@@ -11,8 +11,10 @@
 class Analizador {
 private:
     std::vector<Token> palabrasReservadas;
+    bool verificarIdentificador(Token token);
 public:
     Analizador();
+    void analizar(std::string ruta);
 };
 
 
