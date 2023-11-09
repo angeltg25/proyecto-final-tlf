@@ -25,6 +25,7 @@ void Analizador::analizar(std::string ruta) {
     if (archivo.is_open()) {
         std::string linea; //Linea actual
         while (std::getline(archivo, linea)) {
+            //obtiene la linea
             std::istringstream iss(linea);
             std::string lexema;
 
