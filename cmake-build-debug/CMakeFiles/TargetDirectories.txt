@@ -1,3 +1,0 @@
-C:/td/ws_class_clion/proyecto-final-tlf/cmake-build-debug/CMakeFiles/proyecto_final_tlf.dir
-C:/td/ws_class_clion/proyecto-final-tlf/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/td/ws_class_clion/proyecto-final-tlf/cmake-build-debug/CMakeFiles/rebuild_cache.dir
