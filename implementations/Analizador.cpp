@@ -19,6 +19,10 @@ Analizador::Analizador() {
     palabrasReservadas.push_back(Token("in"));
 }
 
+/**
+ * Metodo para analizar el codigo fuente de la ruta especificada
+ * @param ruta
+ */
 void Analizador::analizar(std::string ruta) {
     std::ifstream archivo(ruta); // Abre el archivo en modo de lectura
 
@@ -26,17 +30,16 @@ void Analizador::analizar(std::string ruta) {
         std::vector<Token> tokensCodigoFuente;
         std::string linea; //Linea actual
         while (std::getline(archivo, linea)) {
-            //obtiene la linea
             std::istringstream iss(linea);
-            std::string elemento;
+            std::string fragmento;
 
-            //lee cada elemento de la linea separado por espacio y lo guarda en elemento
-            while(iss >> elemento) {
-                std::cout << "Fragmento: " << elemento << std::endl; // Imprime cada línea del archivo
-                //IMPORTANTE: para le correcta ejecucion de la funcion obtenerTokens()
-                elemento += " ";
+            //lee cada fragmento de la linea separado por espacio y lo guarda en fragmento
+            while(iss >> fragmento) {
+                std::cout << "Fragmento: " << fragmento << std::endl; // Imprime cada línea del archivo
+                //IMPORTANTE: para le correcta ejecucion de la funcion tokenizar()
+                fragmento += " ";
                 //obtenemos los tokens
-                std::vector<Token> tokensLexema = obtenerTokens(elemento);
+                std::vector<Token> tokensLexema = tokenizar(fragmento);
                 //concatenamos listas
                 tokensCodigoFuente.insert(tokensCodigoFuente.end(), tokensLexema.begin(), tokensLexema.end());
             }
@@ -45,18 +48,17 @@ void Analizador::analizar(std::string ruta) {
         archivo.close(); // Cierra el archivo después de leerlo
 
         //Imprimimos los tokens
+        std::cout << std::endl;
         for (int i = 0; i < tokensCodigoFuente.size(); ++i) {
             Token token = tokensCodigoFuente.at(i);
             std::cout << "Token identificado: "<< token.getElemento() << std::endl;
         }
+        std::cout << std::endl;
+        analizarTokensCodigoFuente(tokensCodigoFuente);
 
     } else {
         std::cerr << "No se pudo abrir el archivo." << std::endl;
     }
-}
-
-bool Analizador::verificarIdentificador(Token token) {
-    return false;
 }
 
 /**
@@ -65,7 +67,7 @@ bool Analizador::verificarIdentificador(Token token) {
  * @param fragmento fragmento de la linea del codigo fuente
  * @return tokens
  */
-std::vector<Token> Analizador::obtenerTokens(std::string fragmento) {
+std::vector<Token> Analizador::tokenizar(std::string fragmento) {
     std::vector<Token> tokens;
     std::string lexema;
 
@@ -120,4 +122,64 @@ std::vector<Token> Analizador::obtenerTokens(std::string fragmento) {
     return tokens;
 }
 
+/**
+ * Metodo el cual realiza el analisis de los tokens del codigo fuente y concluye
+ * que es cada token.
+ * @param tokensCodigoFuente
+ */
+void Analizador::analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuente) {
+    for (int i = 0; i < tokensCodigoFuente.size(); ++i) {
+        Token token = tokensCodigoFuente.at(i);
+
+        if (verificarPalabrasReservadas(token)) {
+            //imprimir que es una palabra reservada
+            std::cout << "Palabra Reservada: "<< token.getElemento() << std::endl;
+        } else {
+            if(verificarOperadoresAritmeticos(token)) {
+                //imprimir que es operador aritmetico
+            }
+        }
+    }
+
+}
+
+//----------------------------UTILIDADES
+
+/**
+ * Metodo usado para verificar si el token dado es una palabra reservada
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarPalabrasReservadas(Token token) {
+    std::string elementoPalabraReservada;
+    std::string elementoToken;
+
+    for (int i = 0; i < palabrasReservadas.size(); ++i) {
+        Token tokenPalabraReservada = palabrasReservadas.at(i);
+        elementoPalabraReservada = tokenPalabraReservada.getElemento();
+        elementoToken = token.getElemento();
+
+        if (elementoPalabraReservada == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un operador aritmetico
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarOperadoresAritmeticos(Token token) {
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un identificador
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarIdentificador(Token token) {
+    return false;
+}
 

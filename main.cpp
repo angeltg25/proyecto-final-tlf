@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include "headers/Ejemplo.h"
 #include "headers/Analizador.h"
 
 int main() {
