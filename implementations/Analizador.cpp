@@ -28,15 +28,15 @@ void Analizador::analizar(std::string ruta) {
         while (std::getline(archivo, linea)) {
             //obtiene la linea
             std::istringstream iss(linea);
-            std::string lexema;
+            std::string elemento;
 
-            //lee cada elemento de la linea separado por espacio y lo guarda en lexema
-            while(iss >> lexema) {
-                std::cout << "Lexema: "<< lexema << std::endl; // Imprime cada línea del archivo
+            //lee cada elemento de la linea separado por espacio y lo guarda en elemento
+            while(iss >> elemento) {
+                std::cout << "Fragmento: " << elemento << std::endl; // Imprime cada línea del archivo
                 //IMPORTANTE: para le correcta ejecucion de la funcion obtenerTokens()
-                lexema += " ";
+                elemento += " ";
                 //obtenemos los tokens
-                std::vector<Token> tokensLexema = obtenerTokens(lexema);
+                std::vector<Token> tokensLexema = obtenerTokens(elemento);
                 //concatenamos listas
                 tokensCodigoFuente.insert(tokensCodigoFuente.end(), tokensLexema.begin(), tokensLexema.end());
             }
@@ -60,59 +60,59 @@ bool Analizador::verificarIdentificador(Token token) {
 }
 
 /**
- * Metodo para obtener los tokens de un lexema (linea del codigo fuente separado por espacio).
- * IMPORTANTE: el lexema debe ingresar con un espacio al final de la cadena.
- * @param lexema fragmento de la linea del codigo fuente
+ * Metodo para obtener los tokens de un fragmento (linea del codigo fuente separado por espacio).
+ * IMPORTANTE: el fragmento debe ingresar con un espacio al final de la cadena.
+ * @param fragmento fragmento de la linea del codigo fuente
  * @return tokens
  */
-std::vector<Token> Analizador::obtenerTokens(std::string lexema) {
+std::vector<Token> Analizador::obtenerTokens(std::string fragmento) {
     std::vector<Token> tokens;
-    std::string elemento;
+    std::string lexema;
 
     //Validar si hay mas de 2 caracteres
-    if(lexema.size() > 2) {
-        elemento.push_back(lexema.at(0));
+    if(fragmento.size() > 2) {
+        lexema.push_back(fragmento.at(0));
 
-        for (int i = 1; i < lexema.size(); ++i) {
-            char caracter = lexema.at(i);
+        for (int i = 1; i < fragmento.size(); ++i) {
+            char caracter = fragmento.at(i);
 
-            //verificar si el elemento anterior es una letra o digito
-            if (isalpha(elemento.at(elemento.size()-1)) || isdigit(elemento.at(elemento.size()-1))) {
-                //verificar si el elemento actual tambien es una letra o digito
-                if ((isalpha(caracter) || isdigit(caracter))){
-                    elemento.push_back(caracter);
+            //verificar si el caracter anterior del lexema es una letra o digito
+            if (isalpha(lexema.at(lexema.size() - 1)) || isdigit(lexema.at(lexema.size() - 1))) {
+                //verificar si el caracter actual tambien es una letra o digito
+                if ((isalpha(caracter) || isdigit(caracter))) {
+                    lexema.push_back(caracter);
                 } else {
-                    //elemento actual diferente a caracter o digito, es un caracter especial, se crea token
-                    Token token(elemento);
+                    //lexema actual diferente a caracter o digito, es un caracter especial, se crea token
+                    Token token(lexema);
                     tokens.push_back(token);
-                    elemento = "";
-                    elemento.push_back(caracter);
+                    lexema = "";
+                    lexema.push_back(caracter);
                 }
-
             } else {
                 //Verificar si el caracter actual tambien es un caracter especial
-                if (!(isalpha(caracter) || isdigit(caracter))){
-                    if (std::isspace(caracter)){
-                        Token token(elemento);
+                if (!(isalpha(caracter) || isdigit(caracter))) {
+                    //verifica si el caracter es un espacio (final), se crea token
+                    if (std::isspace(caracter)) {
+                        Token token(lexema);
                         tokens.push_back(token);
                     } else {
-                        elemento.push_back(caracter);
+                        lexema.push_back(caracter);
                     }
                 } else {
-                    //elemento actual diferente a caracter especial, es una letra o digito, se crea token
-                    Token token(elemento);
+                    //caracter actual diferente a caracter especial, es una letra o digito, se crea token
+                    Token token(lexema);
                     tokens.push_back(token);
-                    elemento = "";
-                    elemento.push_back(caracter);
+                    lexema = "";
+                    lexema.push_back(caracter);
                 }
             }
 
         }
     } else {
         //Al solo haber un caracter, se le crea un token automaticamente
-        if (lexema.size() == 2){
-            elemento.push_back(lexema.at(0));
-            Token token(elemento);
+        if (fragmento.size() == 2) {
+            lexema.push_back(fragmento.at(0));
+            Token token(lexema);
             tokens.push_back(token);
         }
     }
