@@ -59,6 +59,12 @@ bool Analizador::verificarIdentificador(Token token) {
     return false;
 }
 
+/**
+ * Metodo para obtener los tokens de un lexema (linea del codigo fuente separado por espacio).
+ * IMPORTANTE: el lexema debe ingresar con un espacio al final de la cadena.
+ * @param lexema fragmento de la linea del codigo fuente
+ * @return tokens
+ */
 std::vector<Token> Analizador::obtenerTokens(std::string lexema) {
     std::vector<Token> tokens;
     std::string elemento;
