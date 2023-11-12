@@ -9,13 +9,70 @@
 
 Analizador::Analizador() {
     //Inicializacion de los tokens
+
+    //Operadores aritmeticos
+    operadoresAritmeticos.push_back(Token("+"));
+    operadoresAritmeticos.push_back(Token("-"));
+    operadoresAritmeticos.push_back(Token("*"));
+    operadoresAritmeticos.push_back(Token("/"));
+    operadoresAritmeticos.push_back(Token("^"));
+    operadoresAritmeticos.push_back(Token("**"));
+    operadoresAritmeticos.push_back(Token("%%"));
+    operadoresAritmeticos.push_back(Token("%/%"));
+    operadoresAritmeticos.push_back(Token("%*%"));
+
+    //Operadores relacionales
+    operadoresRelacionales.push_back(Token(">"));
+    operadoresRelacionales.push_back(Token("<"));
+    operadoresRelacionales.push_back(Token(">="));
+    operadoresRelacionales.push_back(Token("<="));
+    operadoresRelacionales.push_back(Token("=="));
+    operadoresRelacionales.push_back(Token("!="));
+
+    //Operadores logicos
+    operadoresLogicos.push_back(Token("&"));
+    operadoresLogicos.push_back(Token("&&"));
+    operadoresLogicos.push_back(Token("|"));
+    operadoresLogicos.push_back(Token("||"));
+    operadoresLogicos.push_back(Token("!"));
+
+    //Operadores de asignacion
+    operadoresAsignacion.push_back(Token("<-"));
+    operadoresAsignacion.push_back(Token("->"));
+    operadoresAsignacion.push_back(Token("="));
+    operadoresAsignacion.push_back(Token("->>"));
+    operadoresAsignacion.push_back(Token("<<-"));
+
+    //Simbolos de apertura y cierrre
+    simbolosAperturaCierre.push_back(Token("{"));
+    simbolosAperturaCierre.push_back(Token("}"));
+    simbolosAperturaCierre.push_back(Token("("));
+    simbolosAperturaCierre.push_back(Token(")"));
+    simbolosAperturaCierre.push_back(Token("["));
+    simbolosAperturaCierre.push_back(Token("]"));
+    simbolosAperturaCierre.push_back(Token("\""));
+    simbolosAperturaCierre.push_back(Token("\'"));
+
+    //Separadores de sentencia
+    separadoresSentencia.push_back(Token("."));
+    separadoresSentencia.push_back(Token(","));
+
+    //Palabras reservadas
     palabrasReservadas.push_back(Token("for"));
     palabrasReservadas.push_back(Token("while"));
+    palabrasReservadas.push_back(Token("repeat"));
+    palabrasReservadas.push_back(Token("if"));
+    palabrasReservadas.push_back(Token("else"));
+    palabrasReservadas.push_back(Token("ifelse"));
+    palabrasReservadas.push_back(Token("switch"));
+    palabrasReservadas.push_back(Token("case"));
+    palabrasReservadas.push_back(Token("function"));
     palabrasReservadas.push_back(Token("TRUE"));
     palabrasReservadas.push_back(Token("FALSE"));
     palabrasReservadas.push_back(Token("NULL"));
     palabrasReservadas.push_back(Token("next"));
     palabrasReservadas.push_back(Token("break"));
+    palabrasReservadas.push_back(Token("inf"));
     palabrasReservadas.push_back(Token("in"));
 }
 
@@ -137,6 +194,39 @@ void Analizador::analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuent
         } else {
             if(verificarOperadoresAritmeticos(token)) {
                 //imprimir que es operador aritmetico
+                std::cout << "Operador aritmetico: "<< token.getElemento() << std::endl;
+            } else {
+                if(verificarOperadoresRelacionales(token)) {
+                    //imprimir que es operador aritmetico
+                    std::cout << "Operador relacional: "<< token.getElemento() << std::endl;
+                } else {
+                    if(verificarOperadoresLogicos(token)) {
+                        //imprimir que es operador aritmetico
+                        std::cout << "Operador logico: "<< token.getElemento() << std::endl;
+                    } else {
+                        if(verificarOperadoresAsignacion(token)) {
+                            //imprimir que es operador aritmetico
+                            std::cout << "Operador de asignacion: "<< token.getElemento() << std::endl;
+                        } else {
+                            if(verificarSimbolosAperturaCierre(token)) {
+                                //imprimir que es operador aritmetico
+                                std::cout << "Simbolo de apertura o cierre: "<< token.getElemento() << std::endl;
+                            } else {
+                                if(verificarSeparadoresSentencia(token)) {
+                                    //imprimir que es operador aritmetico
+                                    std::cout << "Separador de sentencia: "<< token.getElemento() << std::endl;
+                                } else {
+                                    if(verificarIdentificador(token)) {
+                                        //imprimir que es operador aritmetico
+                                        std::cout << "Identificador: "<< token.getElemento() << std::endl;
+                                    } else {
+                                        std::cout << "TOKEN NO IDENTIFICADO: "<< token.getElemento() << std::endl;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -145,25 +235,6 @@ void Analizador::analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuent
 
 //----------------------------UTILIDADES
 
-/**
- * Metodo usado para verificar si el token dado es una palabra reservada
- * @param token
- * @return true si lo es, de lo contrario false
- */
-bool Analizador::verificarPalabrasReservadas(Token token) {
-    std::string elementoPalabraReservada;
-    std::string elementoToken;
-
-    for (int i = 0; i < palabrasReservadas.size(); ++i) {
-        Token tokenPalabraReservada = palabrasReservadas.at(i);
-        elementoPalabraReservada = tokenPalabraReservada.getElemento();
-        elementoToken = token.getElemento();
-
-        if (elementoPalabraReservada == elementoToken)
-            return true;
-    }
-    return false;
-}
 
 /**
  * Metodo usado para verificar si el token dado es un operador aritmetico
@@ -171,8 +242,141 @@ bool Analizador::verificarPalabrasReservadas(Token token) {
  * @return true si lo es, de lo contrario false
  */
 bool Analizador::verificarOperadoresAritmeticos(Token token) {
+    std::string operadorAritmetico;
+    std::string elementoToken;
+
+    for (int i = 0; i < operadoresAritmeticos.size(); ++i) {
+        Token tokenOperadorAritmetico = operadoresAritmeticos.at(i);
+        operadorAritmetico = tokenOperadorAritmetico.getElemento();
+        elementoToken = token.getElemento();
+
+        if (operadorAritmetico == elementoToken)
+            return true;
+    }
     return false;
 }
+
+/**
+ * Metodo usado para verificar si el token dado es un operador relacional
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarOperadoresRelacionales(Token token) {
+    std::string operadorRelacional;
+    std::string elementoToken;
+
+    for (int i = 0; i < operadoresRelacionales.size(); ++i) {
+        Token tokenOperadorRelacional = operadoresRelacionales.at(i);
+        operadorRelacional = tokenOperadorRelacional.getElemento();
+        elementoToken = token.getElemento();
+
+        if (operadorRelacional == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un operador logico
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarOperadoresLogicos(Token token) {
+    std::string operadorLogico;
+    std::string elementoToken;
+
+    for (int i = 0; i < operadoresLogicos.size(); ++i) {
+        Token tokenOperadorLogico = operadoresLogicos.at(i);
+        operadorLogico = tokenOperadorLogico.getElemento();
+        elementoToken = token.getElemento();
+
+        if (operadorLogico == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un operador de asignacion
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarOperadoresAsignacion(Token token) {
+    std::string operadorAsignacion;
+    std::string elementoToken;
+
+    for (int i = 0; i < operadoresAsignacion.size(); ++i) {
+        Token tokenOperadorAsignacion = operadoresAsignacion.at(i);
+        operadorAsignacion = tokenOperadorAsignacion.getElemento();
+        elementoToken = token.getElemento();
+
+        if (operadorAsignacion == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un simbolo de apertura o cierre
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarSimbolosAperturaCierre(Token token) {
+    std::string simboloAperturaCierre;
+    std::string elementoToken;
+
+    for (int i = 0; i < simbolosAperturaCierre.size(); ++i) {
+        Token tokenSimboloAperturaCierre = simbolosAperturaCierre.at(i);
+        simboloAperturaCierre = tokenSimboloAperturaCierre.getElemento();
+        elementoToken = token.getElemento();
+
+        if (simboloAperturaCierre == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Metodo usado para verificar si el token dado es un separador de sentencia
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarSeparadoresSentencia(Token token) {
+    std::string separadorSentencia;
+    std::string elementoToken;
+
+    for (int i = 0; i < separadoresSentencia.size(); ++i) {
+        Token tokenSeparadorSentencia = separadoresSentencia.at(i);
+        separadorSentencia = tokenSeparadorSentencia.getElemento();
+        elementoToken = token.getElemento();
+
+        if (separadorSentencia == elementoToken)
+            return true;
+    }
+    return false;
+}
+
+
+/**
+ * Metodo usado para verificar si el token dado es una palabra reservada
+ * @param token
+ * @return true si lo es, de lo contrario false
+ */
+bool Analizador::verificarPalabrasReservadas(Token token) {
+    std::string palabraReservada;
+    std::string elementoToken;
+
+    for (int i = 0; i < palabrasReservadas.size(); ++i) {
+        Token tokenPalabraReservada = palabrasReservadas.at(i);
+        palabraReservada = tokenPalabraReservada.getElemento();
+        elementoToken = token.getElemento();
+
+        if (palabraReservada == elementoToken)
+            return true;
+    }
+    return false;
+}
+
 
 /**
  * Metodo usado para verificar si el token dado es un identificador
@@ -182,4 +386,13 @@ bool Analizador::verificarOperadoresAritmeticos(Token token) {
 bool Analizador::verificarIdentificador(Token token) {
     return false;
 }
+
+
+
+
+
+
+
+
+
 

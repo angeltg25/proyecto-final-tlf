@@ -11,13 +11,25 @@
 class Analizador {
 private:
     //Atributos
+    std::vector<Token> operadoresAritmeticos;
+    std::vector<Token> operadoresRelacionales;
+    std::vector<Token> operadoresLogicos;
+    std::vector<Token> operadoresAsignacion;
+    std::vector<Token> simbolosAperturaCierre;
+    std::vector<Token> separadoresSentencia;
     std::vector<Token> palabrasReservadas;
 
     //Metodos
     std::vector<Token> tokenizar(std::string fragmento);
     void analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuente);
-    bool verificarPalabrasReservadas(Token token);
+
     bool verificarOperadoresAritmeticos(Token token);
+    bool verificarOperadoresRelacionales(Token token);
+    bool verificarOperadoresLogicos(Token token);
+    bool verificarOperadoresAsignacion(Token token);
+    bool verificarSimbolosAperturaCierre(Token token);
+    bool verificarSeparadoresSentencia(Token token);
+    bool verificarPalabrasReservadas(Token token);
     bool verificarIdentificador(Token token);
 public:
     //Constructor
