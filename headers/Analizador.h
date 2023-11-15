@@ -31,6 +31,7 @@ private:
     bool verificarSeparadoresSentencia(Token token);
     bool verificarPalabrasReservadas(Token token);
     bool verificarIdentificador(Token token);
+    bool verificarNumeroEntero(Token token);
 public:
     //Constructor
     Analizador();
