@@ -31,7 +31,10 @@ private:
     bool verificarSeparadoresSentencia(Token token);
     bool verificarPalabrasReservadas(Token token);
     bool verificarIdentificador(Token token);
+    bool validarIdentificador(std::string cadena, int i);
     bool verificarNumeroEntero(Token token);
+    bool verificarValorCadenaCaracter(std::vector<Token> tokensCodigoFuente, int i);
+
 public:
     //Constructor
     Analizador();

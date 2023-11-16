@@ -135,13 +135,13 @@ std::vector<Token> Analizador::tokenizar(std::string fragmento) {
         for (int i = 1; i < fragmento.size(); ++i) {
             char caracter = fragmento.at(i);
 
-            //verificar si el caracter anterior del lexema es una letra o digito
+            //verificar si el caracter anterior del fragmento es una letra o digito
             if (isalpha(lexema.at(lexema.size() - 1)) || isdigit(lexema.at(lexema.size() - 1))) {
                 //verificar si el caracter actual tambien es una letra o digito
                 if ((isalpha(caracter) || isdigit(caracter))) {
                     lexema.push_back(caracter);
                 } else {
-                    //lexema actual diferente a caracter o digito, es un caracter especial, se crea token
+                    //caracter actual diferente a caracter o digito, es un caracter especial, se crea token
                     Token token(lexema);
                     tokens.push_back(token);
                     lexema = "";
@@ -175,7 +175,6 @@ std::vector<Token> Analizador::tokenizar(std::string fragmento) {
             tokens.push_back(token);
         }
     }
-
     return tokens;
 }
 
@@ -188,43 +187,50 @@ void Analizador::analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuent
     for (int i = 0; i < tokensCodigoFuente.size(); ++i) {
         Token token = tokensCodigoFuente.at(i);
 
-        if (verificarNumeroEntero(token)){
+        if (verificarValorCadenaCaracter(tokensCodigoFuente, i)){
             //imprimir que es un numero
-            std::cout << "Numero entero: " << token.getElemento() << std::endl;
+            std::cout << "Valor de cadena o caracter: " << token.getElemento() << std::endl;
         } else {
-            if (verificarPalabrasReservadas(token)) {
-                //imprimir que es una palabra reservada
-                std::cout << "Palabra Reservada: " << token.getElemento() << std::endl;
+            if (verificarNumeroEntero(token)) {
+                //imprimir que es un numero
+                std::cout << "Numero entero: " << token.getElemento() << std::endl;
             } else {
-                if (verificarOperadoresAritmeticos(token)) {
-                    //imprimir que es operador aritmetico
-                    std::cout << "Operador aritmetico: " << token.getElemento() << std::endl;
+                if (verificarPalabrasReservadas(token)) {
+                    //imprimir que es una palabra reservada
+                    std::cout << "Palabra Reservada: " << token.getElemento() << std::endl;
                 } else {
-                    if (verificarOperadoresRelacionales(token)) {
+                    if (verificarOperadoresAritmeticos(token)) {
                         //imprimir que es operador aritmetico
-                        std::cout << "Operador relacional: " << token.getElemento() << std::endl;
+                        std::cout << "Operador aritmetico: " << token.getElemento() << std::endl;
                     } else {
-                        if (verificarOperadoresLogicos(token)) {
+                        if (verificarOperadoresRelacionales(token)) {
                             //imprimir que es operador aritmetico
-                            std::cout << "Operador logico: " << token.getElemento() << std::endl;
+                            std::cout << "Operador relacional: " << token.getElemento() << std::endl;
                         } else {
-                            if (verificarOperadoresAsignacion(token)) {
+                            if (verificarOperadoresLogicos(token)) {
                                 //imprimir que es operador aritmetico
-                                std::cout << "Operador de asignacion: " << token.getElemento() << std::endl;
+                                std::cout << "Operador logico: " << token.getElemento() << std::endl;
                             } else {
-                                if (verificarSimbolosAperturaCierre(token)) {
+                                if (verificarOperadoresAsignacion(token)) {
                                     //imprimir que es operador aritmetico
-                                    std::cout << "Simbolo de apertura o cierre: " << token.getElemento() << std::endl;
+                                    std::cout << "Operador de asignacion: " << token.getElemento() << std::endl;
                                 } else {
-                                    if (verificarSeparadoresSentencia(token)) {
+                                    if (verificarSimbolosAperturaCierre(token)) {
                                         //imprimir que es operador aritmetico
-                                        std::cout << "Separador de sentencia: " << token.getElemento() << std::endl;
+                                        std::cout << "Simbolo de apertura o cierre: " << token.getElemento()
+                                                  << std::endl;
                                     } else {
-                                        if (verificarIdentificador(token)) {
+                                        if (verificarSeparadoresSentencia(token)) {
                                             //imprimir que es operador aritmetico
-                                            std::cout << "Identificador: " << token.getElemento() << std::endl;
+                                            std::cout << "Separador de sentencia: " << token.getElemento() << std::endl;
                                         } else {
-                                            std::cout << "TOKEN NO IDENTIFICADO: " << token.getElemento() << std::endl;
+                                            if (verificarIdentificador(token)) {
+                                                //imprimir que es operador aritmetico
+                                                std::cout << "Identificador: " << token.getElemento() << std::endl;
+                                            } else {
+                                                std::cout << "TOKEN NO IDENTIFICADO: " << token.getElemento()
+                                                          << std::endl;
+                                            }
                                         }
                                     }
                                 }
@@ -384,13 +390,35 @@ bool Analizador::verificarPalabrasReservadas(Token token) {
 
 
 /**
- * Metodo usado para verificar si el token dado es un identificador
+ * Llama al metodo valdiarIdentificador y verifica si el token es un identificador
  * @param token
  * @return true si lo es, de lo contrario false
  */
 bool Analizador::verificarIdentificador(Token token) {
-    return false;
+    return validarIdentificador(token.getElemento(), 0);
 }
+
+
+/**
+ * Metodo usado para verificar y validar si la cadena dada tiene un patron de identificador
+ * @param cadena
+ * @param i
+ * @return true si es un identificador, de lo contrario false
+ */
+bool Analizador::validarIdentificador(std::string cadena, int i) {
+    if (i > cadena.length()-1)
+        return true;
+    char c = cadena.at(i);
+
+    if (i == 0 && c != '.') {
+        if (isdigit(c) || !isalpha(c))
+            return false;
+    }
+    if (c != '_' && !isalpha(c))
+        return false;
+    return validarIdentificador(cadena, i+1);
+}
+
 
 /**
  * Metodo usado para verificar si el token dado es un numero entero
@@ -409,3 +437,17 @@ bool Analizador::verificarNumeroEntero(Token token) {
         return false;
     }
 }
+
+bool Analizador::verificarValorCadenaCaracter(std::vector<Token> tokensCodigoFuente, int i) {
+    if(i > 0 && (i+1) < tokensCodigoFuente.size()){
+        Token tokenAnterior = tokensCodigoFuente.at(i-1);
+        Token tokenSiguiente = tokensCodigoFuente.at(i+1);
+
+        if ((tokenAnterior.getElemento() == "\"" || tokenAnterior.getElemento() == "\'") &&
+            (tokenSiguiente.getElemento() == "\"" || tokenSiguiente.getElemento() == "\'"))
+            return true;
+        return false;
+    }
+    return false;
+}
+
