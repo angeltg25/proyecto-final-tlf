@@ -227,7 +227,7 @@ void Analizador::analizarTokensCodigoFuente(std::vector<Token> tokensCodigoFuent
                                         } else {
                                             if (verificarIdentificador(token)) {
                                                 //imprimir que es operador aritmetico
-                                                std::cout << "Identificador: " << token.getElemento() << std::endl;
+                                                std::cout << "Identificador o funcion: " << token.getElemento() << std::endl;
                                             } else {
                                                 std::cout << "TOKEN NO IDENTIFICADO: " << token.getElemento()
                                                           << std::endl;
@@ -439,6 +439,13 @@ bool Analizador::verificarNumeroEntero(Token token) {
     }
 }
 
+/**
+ * Verifica si un entre comillas dobles o simples hay un valor de cadena, no aplica si
+ * lo que hay entre estos caracteres esta separado por espacio
+ * @param tokensCodigoFuente
+ * @param i pos del vector tokensCodigoFuente
+ * @return true si el valor entre las comillas simples o dobles es cadena o caracter, de lo contrario false
+ */
 bool Analizador::verificarValorCadenaCaracter(std::vector<Token> tokensCodigoFuente, int i) {
     if(i > 0 && (i+1) < tokensCodigoFuente.size()){
         Token tokenAnterior = tokensCodigoFuente.at(i-1);
