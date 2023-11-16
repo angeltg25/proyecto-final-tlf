@@ -407,7 +407,13 @@ bool Analizador::verificarPalabrasReservadas(Token token) {
     return false;
 }
 
-
+/**
+ * Metodo usado para verificar si el token actual de la lista de tokens del
+ * codigo fuente es el nombre de una funcion del lenguaje
+ * @param tokensCodigoFuente
+ * @param i posicion del token actual
+ * @return true si es el nombre de una funcion, de lo contrario false
+ */
 bool Analizador::verificarNombresFunciones(std::vector<Token> tokensCodigoFuente, int i) {
     std::string nombreFuncion;
     std::string elementoToken;
@@ -445,7 +451,7 @@ bool Analizador::verificarIdentificador(Token token) {
 
 
 /**
- * Metodo usado para verificar y validar si la cadena dada tiene un patron de identificador
+ * Metodo recursivo usado para verificar y validar si la cadena dada tiene un patron de identificador
  * @param cadena
  * @param i
  * @return true si es un identificador, de lo contrario false
