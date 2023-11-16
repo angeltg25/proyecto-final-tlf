@@ -74,6 +74,7 @@ Analizador::Analizador() {
     palabrasReservadas.push_back(Token("break"));
     palabrasReservadas.push_back(Token("inf"));
     palabrasReservadas.push_back(Token("in"));
+    palabrasReservadas.push_back(Token("function"));
 }
 
 /**
