@@ -9,5 +9,6 @@ j = 34
 while (i <= 10) {
     if(i %% 2 == 0) {
         j -> j-1
+        print(j)
     }
 }

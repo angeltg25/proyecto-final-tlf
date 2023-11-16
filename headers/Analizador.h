@@ -18,6 +18,7 @@ private:
     std::vector<Token> simbolosAperturaCierre;
     std::vector<Token> separadoresSentencia;
     std::vector<Token> palabrasReservadas;
+    std::vector<Token> nombresFunciones;
 
     //Metodos
     std::vector<Token> tokenizar(std::string fragmento);
@@ -30,6 +31,7 @@ private:
     bool verificarSimbolosAperturaCierre(Token token);
     bool verificarSeparadoresSentencia(Token token);
     bool verificarPalabrasReservadas(Token token);
+    bool verificarNombresFunciones(std::vector<Token> tokensCodigoFuente, int i);
     bool verificarIdentificador(Token token);
     bool validarIdentificador(std::string cadena, int i);
     bool verificarNumeroEntero(Token token);
