@@ -480,11 +480,16 @@ bool Analizador::verificarNumeroEntero(Token token) {
     std::string cadena = token.getElemento();
 
     try {
-        std::stoi(cadena);
-        return true;
-    } catch (const std::invalid_argument &) {
+        size_t pos = 0;
+        int resultado = std::stoi(cadena, &pos);
+
+        // Verificar si hay caracteres no numéricos adicionales después de la conversión
+        return pos == cadena.length() && resultado >= 0;
+    } catch (const std::invalid_argument& e) {
+        // std::stoi arrojará std::invalid_argument si la conversión no es posible
         return false;
-    } catch (const std::out_of_range &) {
+    } catch (const std::out_of_range& e) {
+        // std::stoi arrojará std::out_of_range si el valor está fuera del rango de int
         return false;
     }
 }
